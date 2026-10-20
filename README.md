@@ -1,56 +1,67 @@
 <p align="center">
-    <img src="https://github.com/SDW-Community/Sheep-Dog-n-Wolf-Rewooled/blob/main/res/banner.png?raw=true" style="width: 512px;" />
+    <img src="res/banner.png?raw=true" style="width: 512px;" />
 </p>
 
-<h1 align="center">Sheep, Dog 'n' Wolf: Rewooled</h1>
+<h1 align="center">Sheep, Dog 'n' Wolf: Rewooled NX</h1>
 
-<h3 align="center">An open-source multiplatform implementation of Sheep, Dog 'n' Wolf PC </h3>
-
-
-<div align="center">
-
-
-[![github.com](https://img.shields.io/github/v/release/SDW-Community/Sheep-Dog-n-Wolf-Rewooled.svg?color=green)](https://github.com/SheepStealer2001/Sheep-Dog-n-Wolf-Rewooled/releases/latest)
-
-</div>
+<h3 align="center">A Nintendo Switch homebrew port of <a href="https://github.com/SDW-Community/Sheep-Dog-n-Wolf-Rewooled">Sheep, Dog 'n' Wolf: Rewooled</a>, the open-source implementation of Sheep, Dog 'n' Wolf PC</h3>
 
 ---
-### How to use
-- **You need to provide your own files from the original game version, this project does not include any assets**
-- **Although it is supported, PSX files are still not fully tested and there are quirks to work out**
-- On the launcher you simply browse for your original game folder
-### Features
 
-- **Multiplatform:**  All Windows only APIs replaced via SDL3
-- **Multiple Renderers** Support for Vulkan, DX12 and Metal
-- **Modern Controllers:** Support for modern controllers via SDL3
-- **Scaled Textures:** Support for swapping texture for arbitrarily sized PNGs
+### What it is
 
-### For Mac users
+The game's decompiled code from [Rewooled](https://github.com/SDW-Community/Sheep-Dog-n-Wolf-Rewooled), running natively
+on the Switch as a `.nro` for consoles running Atmosphère: 60 fps, docked (1080p) and handheld (720p), with the
+Joy-Con, a Pro Controller or a USB keyboard.
 
-As the releases are unsigned, you will need to run
-`xattr -r -d com.apple.quarantine Rewooled.app`
+- **You need your own copy of the PC game: no game data or assets are in this repository or its releases.**
+- An OpenGL ES 3 renderer (Mesa / nouveau) in place of SDL3's GPU API, which has no Switch driver
+- The platform layer on libnx and SDL2: audio at 48 kHz, controllers, the clocks, the system language
+- CPU boost to 1785 MHz while playing (put back on quit), configurable in `environment.txt`
+- The pause menu's Screen %, anti-aliasing and texture filtering work on the Switch too
 
-to prevent your OS from blocking the execution
+### Installing
+
+1. Copy `sheepdogwolf.nro` and `environment.txt` to `/switch/sheepdogwolf/` on the SD card.
+2. Copy `Levels/`, `Musics/`, `Voices/`, `References/` and `Bonus/` from **your** PC game's folder next to them.
+3. Start the Homebrew Menu by **holding R while starting a game** (the album has too little memory), then the game.
+
+Controls, settings and troubleshooting: **[switch/README.md](switch/README.md)**.
 
 ### Building
 
-It builds for **Windows (MSVC, x64)**, **macOS (Apple Clang, arm64)** and **Linux (Clang, x86_64 or arm64)**.
+devkitPro with `switch-dev switch-sdl2 switch-mesa switch-libdrm_nouveau switch-libpng switch-zlib`, then:
 
-For Linux users, it is also possible to cross-compile for Windows 64-bit using MinGW-w64 (Clang) via the provided `build_win64.sh` script. This requires the `mingw-w64-gcc` package (on Arch Linux). Note that the resulting `.exe` requires the MinGW runtime DLLs (e.g., `libstdc++-6.dll`, `libgcc_s_seh-1.dll`, `libwinpthread-1.dll`) to be present in the game folder to run.
+```sh
+switch/build.sh                                   # build-switch/SheepD3D.nro
+switch/package.sh --data "<your PC game folder>"  # build-switch/sdcard/ for the SD card's root
+```
 
-You need your own copy of the game: its data is read at run time and is not part of this repository.
+The desktop builds (Windows, macOS, Linux) of upstream Rewooled still work from this tree: see the
+[upstream README](https://github.com/SDW-Community/Sheep-Dog-n-Wolf-Rewooled#building).
 
-**How it was made:** the decompilation was done with Claude and Codex coordinating via an MCP mailbox server - reading the machine code, naming, writing the source. In-game testing and technical knowledge about the game's inner workings came from the Sheep Raider community.
+### What the port changed
 
+The game code is upstream's. The Switch's own parts are `switch/` (the build), `src/render/gl/` (the renderer) and
+`src/platform/switch/` (the platform layer). Two fixes to shared code, both found on hardware:
 
+- `src/app/d3dapp.cpp`: the frame limiter tested for a zero frame time *after* dividing by it. That division is
+  undefined in C++, so GCC dropped the test, and the first frame spun forever.
+- `src/objects/mcard.cpp`: anonymous structs in anonymous unions at namespace scope (a Clang extension) made portable
+  for GCC, with the same layout.
 
 ## Credits
-- **lu9** For making an icon for this project
-- **uhwot**, for [sdw_re_stuff](https://github.com/uhwot/sdw_re_stuff) (MIT): the research into the game's asset formats (WAR, DAV, SND and others), with an exporter and ImHex patterns.
-- **The whole Sheep Raider Discord community**, for helping crack this game open.
 
+- **[SDW-Community](https://github.com/SDW-Community/Sheep-Dog-n-Wolf-Rewooled)** and the Rewooled decompilation
+  contributors, for the decompiled game this port runs. The decompilation was done with Claude and Codex coordinating
+  via an MCP mailbox server; in-game testing and knowledge of the game's inner workings came from the Sheep Raider
+  community.
+- **lu9**, for the project's icon
+- **uhwot**, for [sdw_re_stuff](https://github.com/uhwot/sdw_re_stuff) (MIT): the research into the game's asset formats
+- **The whole Sheep Raider Discord community**, for helping crack this game open
+- **adumah**, for the Switch port
 
 ## Licence
 
-TBD
+MIT, as upstream: see [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). The game itself, its program, data and assets,
+belongs to its rights holders.

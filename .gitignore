@@ -12,3 +12,5 @@ __pycache__/
 TODO.txt
 /tools/work/
 *zip
+# Switch: nxlink session logs
+nxlink-log.txt

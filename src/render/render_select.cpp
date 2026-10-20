@@ -22,6 +22,9 @@ const char *Render_KindName(RendererKind kind)
 
 int Render_KindAvailable(RendererKind kind)
 {
+#ifdef SDW_RENDER_GL
+    return kind == RENDERER_VULKAN; /* one renderer, OpenGL ES (src/render/gl/), in the first slot */
+#endif
     /* asking SDL loads the driver: once per kind */
     static int s_known[RENDERER_COUNT], s_available[RENDERER_COUNT];
     if ((unsigned)kind >= RENDERER_COUNT)
@@ -84,7 +87,11 @@ RenderBackend *Render_CreateBackend(RendererKind kind)
     g_renderBackend = 0;
     if (!Render_KindAvailable(kind))
         return 0;
+#ifdef SDW_RENDER_GL
+    g_renderBackend = Gl_CreateRenderBackend();
+#else
     g_renderBackend = Sdl3_CreateRenderBackend(s_sdl3Drivers[kind], s_kindDisplayNames[kind]);
+#endif
     return g_renderBackend;
 }
 

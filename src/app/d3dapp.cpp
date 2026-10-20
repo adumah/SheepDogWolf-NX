@@ -660,7 +660,9 @@ void D3DApp::Frame_LimitFps(u32 maxFps)
 {
     do {
         g_limiterElapsedSec = g_limiterTimer.GetElapsed(TIMER_SECONDS);
-    } while ((u32)(1.0 / g_limiterElapsedSec) > maxFps && g_limiterElapsedSec != 0.0);
+        /* the zero test first: (u32)(1.0 / 0.0) is undefined, and GCC (the Switch build) dropped the test that came
+         * after it, so the first call - its timer not started yet, elapsed 0 - spun forever */
+    } while (g_limiterElapsedSec != 0.0 && (u32)(1.0 / g_limiterElapsedSec) > maxFps);
     g_limiterTimer.Stop();
     g_limiterTimer.Start();
     PerfOverlay_FrameStart(); /* the F3 overlay: the next frame's work starts here */

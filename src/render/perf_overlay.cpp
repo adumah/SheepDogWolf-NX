@@ -1,5 +1,9 @@
 /* The performance overlay's timings and text (perf_overlay.h). */
+#ifdef __SWITCH__
+#include <SDL2/SDL.h> /* the Nintendo Switch build has SDL2 (src/platform/switch/) */
+#else
 #include <SDL3/SDL.h>
+#endif
 
 #include "perf_overlay.h"
 #include "../engine/game_state.h"

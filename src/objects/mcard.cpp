@@ -50,35 +50,55 @@ static u8 saveIconData[0xa0] = {
     0x00, 0x5c, 0x55, 0x99, 0xf7, 0x7b, 0x59, 0xb5, 0x00, 0xb0, 0xbb, 0xb6, 0x7f, 0xc1, 0xcb, 0x06};
 
 const char *g_mcardFileName; /* "SdwDatas.BKS", set by MCard_Init */
+/* The two blocks below keep the original's layout. They are named, with the fields bound to their old global names by
+ * references, because an anonymous struct in an anonymous union at namespace scope is a Clang extension that GCC (the
+ * Nintendo Switch build) rejects. */
+static struct {
+    void **iconGroups[2];
+    s32 delayMs;
+    u16 iconW1;
+    u16 iconH1;
+    u16 iconReserved[2];
+    u16 freeBlocks;
+    u8 activeMode;
+    u8 navSkipState;
+    u8 chooserVariant;
+    u8 state;
+    s32 result;
+    u8 fade;
+} s_mcard;
+static void **(&g_mcardIconGroups)[2] = s_mcard.iconGroups;
+static s32 &g_mcardDelayMs = s_mcard.delayMs;
+static u16 &g_mcardIconW1 = s_mcard.iconW1;
+static u16 &g_mcardIconH1 = s_mcard.iconH1;
+static u16 (&g_mcardIconReserved)[2] = s_mcard.iconReserved;
+static u16 &g_mcardFreeBlocks = s_mcard.freeBlocks;
+static u8 &g_mcardActiveMode = s_mcard.activeMode;
+static u8 &g_mcardNavSkipState = s_mcard.navSkipState;
+static u8 &g_mcardChooserVariant = s_mcard.chooserVariant;
+static u8 &g_mcardState = s_mcard.state;
+static s32 &g_mcardResult = s_mcard.result;
+static u8 &g_mcardFade = s_mcard.fade;
 static union {
-    struct {
-        void **g_mcardIconGroups[2];
-        s32 g_mcardDelayMs;
-        u16 g_mcardIconW1;
-        u16 g_mcardIconH1;
-        u16 g_mcardIconReserved[2];
-        u16 g_mcardFreeBlocks;
-        u8 g_mcardActiveMode;
-        u8 g_mcardNavSkipState;
-        u8 g_mcardChooserVariant;
-        u8 g_mcardState;
-        s32 g_mcardResult;
-        u8 g_mcardFade;
-    };
-};
-static union {
-    u8 g_saveCardHeader[0x200]; /* 'SC' header, title, CLUT, icon, then the save data */
+    u8 header[0x200]; /* 'SC' header, title, CLUT, icon, then the save data */
     struct {
         u8 saveImageFrames[0x100]; /* header + icon frames (g_saveCardHeader) */
-        u32 g_saveImageTimestamp;
-        u16 g_saveImageStatus;
-        s8 g_saveLastSlot;
+        u32 timestamp;
+        u16 status;
+        s8 lastSlot;
         u8 saveImagePad107;
-        char g_cardBlockState[4];  /* 'E' empty / 'F' full */
-        u8 g_cardBlocks[4][0x2c];  /* the four saved progress records */
-        u32 g_saveImageCrc;        /* CRC32 of the image with this field zeroed */
-    }; /* -0x200 unreferenced */
-};
+        char blockState[4];  /* 'E' empty / 'F' full */
+        u8 blocks[4][0x2c];  /* the four saved progress records */
+        u32 crc;             /* CRC32 of the image with this field zeroed */
+    } image; /* -0x200 unreferenced */
+} s_saveCard;
+static u8 (&g_saveCardHeader)[0x200] = s_saveCard.header;
+static u32 &g_saveImageTimestamp = s_saveCard.image.timestamp;
+static u16 &g_saveImageStatus = s_saveCard.image.status;
+static s8 &g_saveLastSlot = s_saveCard.image.lastSlot;
+static char (&g_cardBlockState)[4] = s_saveCard.image.blockState;
+static u8 (&g_cardBlocks)[4][0x2c] = s_saveCard.image.blocks;
+static u32 &g_saveImageCrc = s_saveCard.image.crc;
 const char *(*g_pGetUiString)(u32 id) = 0;
 s32 g_mcardScreen = 0;
 u8 g_mcardPhase = 0;

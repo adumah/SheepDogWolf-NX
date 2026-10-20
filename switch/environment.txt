@@ -1,0 +1,25 @@
+# Sheep, Dog 'n' Wolf: Rewooled for the Nintendo Switch: the settings, read when the game starts.
+# NAME=value lines; '#' starts a comment. Remove the '#' in front of a line to use it.
+
+# The CPU clock while the game runs, in MHz (put back when it quits). 0 leaves it alone.
+SDW_CPU_BOOST=1785
+
+# The GPU clock while the game runs, in MHz. 0 (the default) leaves it alone. 768 is the docked clock.
+#SDW_GPU_BOOST=768
+
+# Vertical syncs per frame: 1 = 60 fps, 2 = 30 fps (steadier, cooler, longer battery life).
+#SDW_SWAP_INTERVAL=1
+
+# 1: the A button is Cross and B is Circle (by their labels). By default the buttons go by position, as on the PC
+# with any controller: B (bottom) is Cross, A (right) is Circle, Y (left) is Square, X (top) is Triangle.
+#SDW_SWAP_AB=1
+
+# 1: the performance overlay (FPS and frame times) from the start. F3 on a USB keyboard toggles it.
+#SDW_PERF_OVERLAY=1
+
+# 1: the log also goes to nxlink's terminal on the PC (automatic when nxlink -s started the game).
+#SDW_NXLINK=1
+
+# The game's command-line flags (see src/platform/options.h). Screen percent (the GPU frame against the screen,
+# 25..200; the pause menu changes it too), anti-aliasing, the scene to start in:
+#SDW_ARGS=--scale=75 --msaa=0 --level=-1

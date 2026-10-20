@@ -201,4 +201,8 @@ void Render_DestroyDevice();
 RenderBackend *Sdl3_CreateRenderBackend(const char *driver, const char *name);
 int Sdl3_DriverAvailable(const char *driver);
 
+/* The OpenGL ES 3 backend (src/render/gl/), the only one on the Nintendo Switch (SDW_RENDER_GL): it takes the
+ * RENDERER_VULKAN slot, so that the saved settings and the pause menu need nothing new */
+RenderBackend *Gl_CreateRenderBackend();
+
 #endif

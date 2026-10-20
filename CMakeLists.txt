@@ -9,6 +9,13 @@ cmake_minimum_required(VERSION 3.20)
 
 project(SheepD3D C CXX)
 
+# Nintendo Switch: devkitPro's toolchain (aarch64-none-elf-cmake) builds the game as a homebrew .nro, on its own
+# (switch/switch.cmake)
+if(NINTENDO_SWITCH)
+    include(switch/switch.cmake)
+    return()
+endif()
+
 # macOS: the launcher's update check uses NSURLSession, from Objective-C++ (src/launcher/http_get_mac.mm)
 if(APPLE)
     enable_language(OBJCXX)
