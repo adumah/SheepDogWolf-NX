@@ -39,7 +39,7 @@ player 1. A USB keyboard works too, with the PC's keys (F3 toggles the performan
 
 | Name | Default | |
 |---|---|---|
-| `SDW_CPU_BOOST` | `1785` | the CPU clock in MHz while the game runs, put back when it quits; `0` leaves it alone. A clock already higher (an overclocking tool) is left alone |
+| `SDW_CPU_BOOST` | `0` | the CPU clock in MHz while the game runs, put back when it quits (`0`: left at the stock clock; `1785` is the highest official one). A clock already higher (an overclocking tool) is left alone |
 | `SDW_GPU_BOOST` | `0` | the GPU clock in MHz (`0`: left alone) |
 | `SDW_SWAP_INTERVAL` | `1` | `1`: 60 fps; `2`: 30 fps |
 | `SDW_SWAP_AB` | `0` | `1`: A is Cross, B is Circle |

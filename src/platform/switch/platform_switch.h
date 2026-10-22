@@ -3,7 +3,7 @@
  *
  * The settings: /switch/sheepdogwolf/environment.txt, NAME=value lines read at start-up into the environment ('#'
  * starts a comment):
- *   SDW_CPU_BOOST=MHz      the CPU clock while the game runs (default 1785; 0 leaves it alone)
+ *   SDW_CPU_BOOST=MHz      the CPU clock while the game runs (default 0: left at the stock clock)
  *   SDW_GPU_BOOST=MHz      the GPU clock while the game runs (default 0: left alone)
  *   SDW_SWAP_INTERVAL=N    vertical syncs per frame (default 1: 60 fps; 2: 30 fps)
  *   SDW_SWAP_AB=1          A is Cross and B is Circle (the labels), instead of the positions (B Cross, A Circle)

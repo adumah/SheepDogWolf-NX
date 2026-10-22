@@ -17,7 +17,7 @@ Joy-Con, a Pro Controller or a USB keyboard.
 - **You need your own copy of the PC game: no game data or assets are in this repository or its releases.**
 - An OpenGL ES 3 renderer (Mesa / nouveau) in place of SDL3's GPU API, which has no Switch driver
 - The platform layer on libnx and SDL2: audio at 48 kHz, controllers, the clocks, the system language
-- CPU boost to 1785 MHz while playing (put back on quit), configurable in `environment.txt`
+- Runs at the stock clocks; a CPU or GPU boost can be set in `environment.txt` (put back on quit)
 - The pause menu's Screen %, anti-aliasing and texture filtering work on the Switch too
 
 ### Installing

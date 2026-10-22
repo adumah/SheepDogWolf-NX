@@ -321,7 +321,7 @@ int main(int argc, char **argv)
     snprintf(saves, sizeof(saves), "%s/saves", s_baseDir);
     setenv("SDW_SAVE_DIR", saves, 0);
 
-    Switch_SetClock(&s_cpuClock, Switch_EnvInt("SDW_CPU_BOOST", 1785), "CPU");
+    Switch_SetClock(&s_cpuClock, Switch_EnvInt("SDW_CPU_BOOST", 0), "CPU");
     Switch_SetClock(&s_gpuClock, Switch_EnvInt("SDW_GPU_BOOST", 0), "GPU");
     s_swapAB = Switch_EnvInt("SDW_SWAP_AB", 0);
     if (Switch_EnvInt("SDW_PERF_OVERLAY", 0))

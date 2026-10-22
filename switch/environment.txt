@@ -1,8 +1,9 @@
 # Sheep, Dog 'n' Wolf: Rewooled for the Nintendo Switch: the settings, read when the game starts.
 # NAME=value lines; '#' starts a comment. Remove the '#' in front of a line to use it.
 
-# The CPU clock while the game runs, in MHz (put back when it quits). 0 leaves it alone.
-SDW_CPU_BOOST=1785
+# The CPU clock while the game runs, in MHz (put back when it quits). 0 (the default) leaves it at the stock clock.
+# 1785 is the highest official clock.
+#SDW_CPU_BOOST=1785
 
 # The GPU clock while the game runs, in MHz. 0 (the default) leaves it alone. 768 is the docked clock.
 #SDW_GPU_BOOST=768
