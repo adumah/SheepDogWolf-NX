@@ -11,13 +11,14 @@
 ### What it is
 
 The game's decompiled code from [Rewooled](https://github.com/SDW-Community/Sheep-Dog-n-Wolf-Rewooled), running natively
-on the Switch as a `.nro` for consoles running Atmosphère: 60 fps, docked (1080p) and handheld (720p), with the
-Joy-Con, a Pro Controller or a USB keyboard.
+on the Switch as a `.nro` for consoles running Atmosphère, with the Joy-Con, a Pro Controller or a USB keyboard.
+
+**It runs at 60 fps on the Switch's stock clocks, with no overclock: 1080p docked and 720p handheld.**
 
 - **You need your own copy of the PC game: no game data or assets are in this repository or its releases.**
 - An OpenGL ES 3 renderer (Mesa / nouveau) in place of SDL3's GPU API, which has no Switch driver
 - The platform layer on libnx and SDL2: audio at 48 kHz, controllers, the clocks, the system language
-- Runs at the stock clocks; a CPU or GPU boost can be set in `environment.txt` (put back on quit)
+- No overclock needed: the game leaves the clocks at stock. A CPU or GPU boost can still be set in `environment.txt` (put back on quit)
 - The pause menu's Screen %, anti-aliasing and texture filtering work on the Switch too
 
 ### Installing
